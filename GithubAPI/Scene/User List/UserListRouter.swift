@@ -22,7 +22,7 @@ public class UserListRouter: UserListDataPassing {
     
     public func createModule() -> UserListViewController {
         let viewController = UserListViewController(nibName: "UserListViewController", bundle: Bundle(for: type(of: self)))
-        let interactor = UserListInteractor()
+        let interactor = UserListInteractor(userWorker: UserWorker())
         let presenter = UserListPresenter()
         viewController.interactor = interactor
         viewController.router = self

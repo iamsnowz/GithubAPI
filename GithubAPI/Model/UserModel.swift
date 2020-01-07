@@ -8,13 +8,13 @@
 
 import UIKit
 
-internal struct UserModel {
+public struct UserModel {
     
-    internal struct Request {
+    public  struct Request {
         
     }
     
-    internal struct Response: Decodable {
+    public  struct Response: Decodable {
         var login: String?
         var id: Int?
         var avatarUrl: String?
@@ -32,12 +32,22 @@ internal struct UserModel {
         }
     }
     
-    internal struct Error: Decodable {
-        
+    public enum ErrorStatus: Error {
+        case network
     }
     
-    internal struct ViewModel {
-        
+    public struct UserList {
+        public let users: [User]
     }
+    
+    public struct User {
+        public let id: Int
+        public let login: String
+        public let avatar: String
+        public let githubUrl: String
+        public let accountType: String
+        public let siteAdmin: String
+    }
+
     
 }

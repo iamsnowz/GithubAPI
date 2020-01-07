@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 internal protocol UserListDisplayLogic: class {
-
+    func displayUser(userList: UserModel.UserList)
+    func endRefresh()
+    func showLoading()
+    func hideLoading()
 }
 
-public class UserListViewController: UIViewController {
+public class UserListViewController: UIViewController, NVActivityIndicatorViewable {
     
     // MARK: - IBOutlet Properties
     @IBOutlet private var tableView: UITableView!
@@ -21,46 +25,88 @@ public class UserListViewController: UIViewController {
     internal var interactor: (UserListBusinessLogic & UserListDataStore)?
     internal var router: (UserListRoutingLogic & UserListDataPassing)?
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .gray
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        return refreshControl
+    }()
     // MARK: - View lifecycle
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
-        //tableView.register(UINib(nibName: <#T##String#>, bundle: <#T##Bundle?#>), forCellReuseIdentifier: <#T##String#>)
+        setupView()
+        interactor?.getUser()
     }
     
     // MARK: - Setup View
+    private func setupView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
+    }
     
     // MARK: - Action
-    
+    @objc
+    private func pullToRefresh() {
+        interactor?.refresh()
+    }
 }
 
 // MARK: - Start of Extension Any
 extension UserListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        interactor?.selectUser(at: indexPath)
+    }
+    
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
     }
 }
 
 extension UserListViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return interactor?.userList?.users.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "Sample \(indexPath.row)"
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath)
+        configure(for: cell, at: indexPath)
         return cell
+    }
+    
+    private func configure(for cell: UITableViewCell, at indexPath: IndexPath) {
+        let row = indexPath.row
+        if let cell = cell as? UserTableViewCell {
+            guard let list = interactor?.userList, let user = interactor?.userList?.users[row] else { return }
+            cell.updateUser(user: user)
+            cell.updateIndex(tag: row)
+            cell.updateUserList(userList: list)
+        }
     }
     
 }
 // MARK: - End of Extension Any
 // MARK: - View Protocol
 extension UserListViewController: UserListDisplayLogic {
+    func displayUser(userList: UserModel.UserList) {
+        interactor?.updateUserList(userList: userList)
+        tableView.reloadData()
+    }
     
+    func endRefresh() {
+        refreshControl.endRefreshingWhenReloadData()
+    }
+    
+    func showLoading() {
+        let width = UIScreen.main.bounds.width
+        let size = CGSize(width: width * 0.25 , height: width * 0.25)
+        startAnimating(size, type: .circleStrokeSpin, fadeInAnimation: nil)
+    }
+    
+    func hideLoading() {
+        stopAnimating()
+    }
 }
