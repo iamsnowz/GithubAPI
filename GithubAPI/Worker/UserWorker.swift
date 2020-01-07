@@ -14,13 +14,18 @@ public protocol UserWorkerProtocol {
 }
 
 class UserWorker: UserWorkerProtocol {
-    
+    /*
+     Get github user list
+     */
     func getUserList(id: Int, completion: @escaping ((Result<[UserModel.Response], ErrorStatus>) -> Void)) {
         Service.shared.GET(request: .users(since: id)) { (result) in
             completion(result)
         }
     }
     
+    /*
+     Get github user detail
+     */
     func getUser(userLogin: String, completion: @escaping ((Result<UserModel.Response, ErrorStatus>) -> Void)) {
         Service.shared.GET(request: .user(login: userLogin))  { (result) in
             completion(result)

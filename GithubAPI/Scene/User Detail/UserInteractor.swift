@@ -34,6 +34,9 @@ internal class UserInteractor: UserDataStore {
 }
 
 extension UserInteractor: UserBusinessLogic {
+    /*
+     get user by login name
+     */
     func getUser() {
         guard let userLogin = userLogin else { return }
         presenter?.viewController?.showLoading()
@@ -48,6 +51,9 @@ extension UserInteractor: UserBusinessLogic {
         })
     }
     
+    /*
+     handle favorite user
+     */
     func favoriteModify() {
         guard let user = user else { return }
         UserFavoriteDatabase.shared.modify(user: user)

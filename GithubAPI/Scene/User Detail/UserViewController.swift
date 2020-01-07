@@ -85,8 +85,6 @@ extension UserViewController: UserDisplayLogic {
         userSiteadminLabel.text = user.siteAdmin
         interactor?.user = user
         interactor?.updateFavorite(user: user)
-        
-        
     }
     
     func displayFavorite(image: UIImage) {

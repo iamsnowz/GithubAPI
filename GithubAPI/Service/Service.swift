@@ -39,6 +39,7 @@ public class Service {
     static let shared = Service()
     var alamofireManager: SessionManager?
     let reachability = NetworkReachabilityManager()
+    
     init() {
         let configure = URLSessionConfiguration.default
         configure.timeoutIntervalForRequest = 10
@@ -49,6 +50,7 @@ public class Service {
      service for request api from remote server
      */
     func GET<T: Decodable>(request: API, completion: @escaping ((Swift.Result<T, ErrorStatus>) -> Void)) {
+        
         if reachability?.isReachable == false {
             completion(.failure(.networkError))
             return

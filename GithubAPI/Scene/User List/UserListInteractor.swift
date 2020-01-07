@@ -40,7 +40,9 @@ internal class UserListInteractor: UserListDataStore {
 }
 
 extension UserListInteractor: UserListBusinessLogic {
-    
+    /*
+     pull to refresh user
+     */
     func refresh() {
         next = 0
         userList = nil
@@ -55,6 +57,9 @@ extension UserListInteractor: UserListBusinessLogic {
         })
     }
     
+    /*
+     get user github
+     */
     func getUser() {
         presenter?.viewController?.showLoading()
         userWorker?.getUserList(id: next, completion: { [weak self] (result) in
@@ -68,6 +73,9 @@ extension UserListInteractor: UserListBusinessLogic {
         })
     }
     
+    /*
+     Logic for paginate
+     */
     func pagination(indexPath: IndexPath) {
         let lastElement = indexPath.row + 1
         if lastElement == userList?.users.count {
@@ -86,6 +94,9 @@ extension UserListInteractor: UserListBusinessLogic {
         }
     }
     
+    /*
+     selected user for see more detail
+     */
     func selectUser(at indexPath: IndexPath) {
         guard let list = userList else { return }
         self.indexPath = indexPath
@@ -100,6 +111,9 @@ extension UserListInteractor: UserListBusinessLogic {
         }
     }
     
+    /*
+     handle favorite user
+     */
     func updateFavorite(tableView: UITableView) {
         guard let indexPath = indexPath else { return }
         tableView.reloadRows(at: [indexPath], with: .none)
