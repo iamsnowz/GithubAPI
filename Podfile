@@ -9,7 +9,8 @@ target 'GithubAPI' do
   pod 'Moya'
   pod 'Kingfisher'
   pod 'RealmSwift'
-
+  pod 'NVActivityIndicatorView'
+  
   target 'GithubAPITests' do
     inherit! :search_paths
     # Pods for testing
