@@ -8,6 +8,7 @@ target 'GithubAPI' do
   # Pods for GithubAPI
   pod 'Moya'
   pod 'Kingfisher'
+  pod 'RealmSwift'
 
   target 'GithubAPITests' do
     inherit! :search_paths
