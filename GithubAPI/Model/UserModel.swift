@@ -1,5 +1,5 @@
 //
-//  UserListModel.swift
+//  UserModel.swift
 //  GithubAPI
 //
 //  Created by iAmSnow on 7/1/2563 BE.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal struct UserListModel {
+internal struct UserModel {
     
     internal struct Request {
         

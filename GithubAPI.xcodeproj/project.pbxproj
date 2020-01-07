@@ -12,7 +12,7 @@
 		781E8B2123C4CAE50005E8EF /* UserListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B1B23C4CAE50005E8EF /* UserListRouter.swift */; };
 		781E8B2223C4CAE50005E8EF /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B1C23C4CAE50005E8EF /* UserListViewController.swift */; };
 		781E8B2323C4CAE50005E8EF /* UserListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B1D23C4CAE50005E8EF /* UserListInteractor.swift */; };
-		781E8B2423C4CAE50005E8EF /* UserListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B1E23C4CAE50005E8EF /* UserListModel.swift */; };
+		781E8B2423C4CAE50005E8EF /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B1E23C4CAE50005E8EF /* UserModel.swift */; };
 		781E8B2523C4CAE50005E8EF /* UserListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781E8B1F23C4CAE50005E8EF /* UserListViewController.xib */; };
 		785E564523C49F3A006F1F3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785E564423C49F3A006F1F3B /* AppDelegate.swift */; };
 		785E564723C49F3A006F1F3B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785E564623C49F3A006F1F3B /* SceneDelegate.swift */; };
@@ -51,7 +51,7 @@
 		781E8B1B23C4CAE50005E8EF /* UserListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRouter.swift; sourceTree = "<group>"; };
 		781E8B1C23C4CAE50005E8EF /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		781E8B1D23C4CAE50005E8EF /* UserListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListInteractor.swift; sourceTree = "<group>"; };
-		781E8B1E23C4CAE50005E8EF /* UserListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListModel.swift; sourceTree = "<group>"; };
+		781E8B1E23C4CAE50005E8EF /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		781E8B1F23C4CAE50005E8EF /* UserListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListViewController.xib; sourceTree = "<group>"; };
 		785E564123C49F3A006F1F3B /* GithubAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		785E564423C49F3A006F1F3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,10 +131,17 @@
 				781E8B1B23C4CAE50005E8EF /* UserListRouter.swift */,
 				781E8B1C23C4CAE50005E8EF /* UserListViewController.swift */,
 				781E8B1D23C4CAE50005E8EF /* UserListInteractor.swift */,
-				781E8B1E23C4CAE50005E8EF /* UserListModel.swift */,
 				781E8B1F23C4CAE50005E8EF /* UserListViewController.xib */,
 			);
 			path = "User List";
+			sourceTree = "<group>";
+		};
+		781E8B2623C4CB400005E8EF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				781E8B1E23C4CAE50005E8EF /* UserModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		785E563823C49F3A006F1F3B = {
@@ -162,6 +169,7 @@
 		785E564323C49F3A006F1F3B /* GithubAPI */ = {
 			isa = PBXGroup;
 			children = (
+				781E8B2623C4CB400005E8EF /* Model */,
 				781E8B1823C4CABF0005E8EF /* Scene */,
 				785E564423C49F3A006F1F3B /* AppDelegate.swift */,
 				785E564623C49F3A006F1F3B /* SceneDelegate.swift */,
@@ -452,7 +460,7 @@
 			files = (
 				785E564523C49F3A006F1F3B /* AppDelegate.swift in Sources */,
 				781E8B2023C4CAE50005E8EF /* UserListPresenter.swift in Sources */,
-				781E8B2423C4CAE50005E8EF /* UserListModel.swift in Sources */,
+				781E8B2423C4CAE50005E8EF /* UserModel.swift in Sources */,
 				785E564723C49F3A006F1F3B /* SceneDelegate.swift in Sources */,
 				781E8B2323C4CAE50005E8EF /* UserListInteractor.swift in Sources */,
 				785E564923C49F3A006F1F3B /* ContentView.swift in Sources */,
