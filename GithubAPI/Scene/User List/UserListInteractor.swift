@@ -11,6 +11,7 @@ import UIKit
 internal protocol UserListBusinessLogic {
     func refresh()
     func getUser()
+    func pagination(indexPath: IndexPath)
     func selectUser(at indexPath: IndexPath)
     func updateUserList(userList: UserModel.UserList)
     func updateFavorite(tableView: UITableView)
@@ -42,6 +43,7 @@ extension UserListInteractor: UserListBusinessLogic {
     
     func refresh() {
         next = 0
+        userList = nil
         userWorker?.getUserList(id: next, completion: { [weak self] (result) in
             switch result {
             case .success(let response):
@@ -49,6 +51,7 @@ extension UserListInteractor: UserListBusinessLogic {
             case .failure(let error):
                 break
             }
+            self?.presenter?.viewController?.hideLoading()
         })
     }
     
@@ -65,6 +68,23 @@ extension UserListInteractor: UserListBusinessLogic {
         })
     }
     
+    func pagination(indexPath: IndexPath) {
+        let lastElement = indexPath.row + 1
+        if lastElement == userList?.users.count {
+            guard let lastUser = userList?.users.last else { return }
+            next = lastUser.id
+            userWorker?.getUserList(id: next, completion: { [weak self] (result) in
+                switch result {
+                case .success(let response):
+                    self?.presenter?.presentUserResponse(response: response)
+                case .failure(let error):
+                    break
+                }
+                self?.presenter?.viewController?.hideLoading()
+            })
+        }
+    }
+    
     func selectUser(at indexPath: IndexPath) {
         guard let list = userList else { return }
         self.indexPath = indexPath
@@ -72,7 +92,12 @@ extension UserListInteractor: UserListBusinessLogic {
     }
     
     func updateUserList(userList: UserModel.UserList) {
-        self.userList = userList
+        if self.userList == nil {
+            self.userList = userList
+        } else {
+            self.userList?.users.append(contentsOf: userList.users)
+        }
+        
     }
     
     func updateFavorite(tableView: UITableView) {

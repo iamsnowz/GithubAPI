@@ -12,9 +12,9 @@ import NVActivityIndicatorView
 internal protocol UserListDisplayLogic: class {
     func displayUser(userList: UserModel.UserList)
     func displayNetworkError()
-    func endRefresh()
     func showLoading()
     func hideLoading()
+    func showPaginateLoading()
 }
 
 public class UserListViewController: UIViewController, NVActivityIndicatorViewable {
@@ -46,6 +46,7 @@ public class UserListViewController: UIViewController, NVActivityIndicatorViewab
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
+        tableView.refreshControl = refreshControl
     }
     
     // MARK: - Action
@@ -67,7 +68,7 @@ extension UserListViewController: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
+        interactor?.pagination(indexPath: indexPath)
     }
 }
 
@@ -102,17 +103,24 @@ extension UserListViewController: UserListDisplayLogic {
         tableView.reloadData()
     }
     
-    func endRefresh() {
-        refreshControl.endRefreshingWhenReloadData()
-    }
-    
     func showLoading() {
         let width = UIScreen.main.bounds.width
         let size = CGSize(width: width * 0.25 , height: width * 0.25)
         startAnimating(size, type: .circleStrokeSpin, fadeInAnimation: nil)
     }
     
+    func showPaginateLoading() {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.startAnimating()
+        spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: 44, height: CGFloat(44))
+        tableView.tableFooterView = spinner
+        tableView.tableFooterView?.isHidden = false
+    }
+    
     func hideLoading() {
+        tableView.tableFooterView = nil
+        tableView.tableFooterView?.isHidden = true
+        refreshControl.endRefreshingWhenReloadData()
         stopAnimating()
     }
     

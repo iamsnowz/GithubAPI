@@ -33,7 +33,7 @@ public struct UserModel {
     }
     
     public struct UserList {
-        public let users: [User]
+        public var users: [User]
     }
     
     public struct User {
