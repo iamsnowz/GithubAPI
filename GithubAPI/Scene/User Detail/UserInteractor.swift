@@ -42,7 +42,7 @@ extension UserInteractor: UserBusinessLogic {
             case .success(let response):
                 self?.presenter?.presentUserResponse(response: response)
             case .failure(let error):
-                break
+                self?.presenter?.presentErrorState(error: error)
             }
             self?.presenter?.viewController?.hideLoading()
         })

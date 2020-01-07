@@ -11,7 +11,7 @@ import NVActivityIndicatorView
 
 internal protocol UserListDisplayLogic: class {
     func displayUser(userList: UserModel.UserList)
-    func displayNetworkError()
+    func displayNetworkError(alert: UIAlertController)
     func showLoading()
     func hideLoading()
     func showPaginateLoading()
@@ -42,11 +42,14 @@ public class UserListViewController: UIViewController, NVActivityIndicatorViewab
     
     // MARK: - Setup View
     private func setupView() {
+        title = "Github Users"
         view.backgroundColor = UIColor.systemBackground
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
         tableView.refreshControl = refreshControl
+        
     }
     
     // MARK: - Action
@@ -118,13 +121,13 @@ extension UserListViewController: UserListDisplayLogic {
     }
     
     func hideLoading() {
-        tableView.tableFooterView = nil
+        tableView.tableFooterView = UIView()
         tableView.tableFooterView?.isHidden = true
         refreshControl.endRefreshingWhenReloadData()
         stopAnimating()
     }
     
-    func displayNetworkError() {
-        
+    func displayNetworkError(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
     }
 }

@@ -31,24 +31,36 @@ public enum API {
 }
 
 public enum ErrorStatus: Error {
-    case network
+    case networkError
+    case commonError
 }
 
 public class Service {
     static let shared = Service()
-    
+    var alamofireManager: SessionManager?
+    let reachability = NetworkReachabilityManager()
+    init() {
+        let configure = URLSessionConfiguration.default
+        configure.timeoutIntervalForRequest = 10
+        configure.timeoutIntervalForResource = 10
+        alamofireManager = Alamofire.SessionManager(configuration: configure)
+    }
     /*
      service for request api from remote server
      */
-    func GET<T: Decodable>(request: API, completion: @escaping ((T?) -> Void)) {
-        Alamofire.request(request.url, method: request.method).responseJSON { (response) in
+    func GET<T: Decodable>(request: API, completion: @escaping ((Swift.Result<T, ErrorStatus>) -> Void)) {
+        if reachability?.isReachable == false {
+            completion(.failure(.networkError))
+            return
+        }
+        
+        alamofireManager?.request(request.url, method: request.method).responseJSON { (response) in
             switch response.result {
-            case .success(let value):
+            case .success:
                 guard let data = response.data, let object = try? JSONDecoder().decode(T.self, from: data) else { return }
-                completion(object)
+                completion(.success(object))
             case .failure(let error):
-                completion(nil)
-                print(error.localizedDescription)
+                completion(.failure(.commonError))
             }
         }
     }

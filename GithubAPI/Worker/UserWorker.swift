@@ -16,23 +16,14 @@ public protocol UserWorkerProtocol {
 class UserWorker: UserWorkerProtocol {
     
     func getUserList(id: Int, completion: @escaping ((Result<[UserModel.Response], ErrorStatus>) -> Void)) {
-        Service.shared.GET(request: .users(since: id)) { (response: [UserModel.Response]?) in
-            if let response = response {
-                completion(.success(response))
-            } else {
-                completion(.failure(.network))
-            }
-            
+        Service.shared.GET(request: .users(since: id)) { (result) in
+            completion(result)
         }
     }
     
     func getUser(userLogin: String, completion: @escaping ((Result<UserModel.Response, ErrorStatus>) -> Void)) {
-        Service.shared.GET(request: .user(login: userLogin)) { (response: UserModel.Response?) in
-            if let response = response {
-                completion(.success(response))
-            } else {
-                completion(.failure(.network))
-            }
+        Service.shared.GET(request: .user(login: userLogin))  { (result) in
+            completion(result)
         }
     }
 }

@@ -49,7 +49,7 @@ extension UserListInteractor: UserListBusinessLogic {
             case .success(let response):
                 self?.presenter?.presentUserResponse(response: response)
             case .failure(let error):
-                break
+                self?.presenter?.presentErrorState(error: error)
             }
             self?.presenter?.viewController?.hideLoading()
         })
@@ -62,7 +62,7 @@ extension UserListInteractor: UserListBusinessLogic {
             case .success(let response):
                 self?.presenter?.presentUserResponse(response: response)
             case .failure(let error):
-                break
+                self?.presenter?.presentErrorState(error: error)
             }
             self?.presenter?.viewController?.hideLoading()
         })
@@ -71,6 +71,7 @@ extension UserListInteractor: UserListBusinessLogic {
     func pagination(indexPath: IndexPath) {
         let lastElement = indexPath.row + 1
         if lastElement == userList?.users.count {
+            presenter?.viewController?.showPaginateLoading()
             guard let lastUser = userList?.users.last else { return }
             next = lastUser.id
             userWorker?.getUserList(id: next, completion: { [weak self] (result) in
@@ -78,7 +79,7 @@ extension UserListInteractor: UserListBusinessLogic {
                 case .success(let response):
                     self?.presenter?.presentUserResponse(response: response)
                 case .failure(let error):
-                    break
+                    self?.presenter?.presentErrorState(error: error)
                 }
                 self?.presenter?.viewController?.hideLoading()
             })
@@ -97,7 +98,6 @@ extension UserListInteractor: UserListBusinessLogic {
         } else {
             self.userList?.users.append(contentsOf: userList.users)
         }
-        
     }
     
     func updateFavorite(tableView: UITableView) {

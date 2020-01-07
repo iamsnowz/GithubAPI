@@ -13,6 +13,8 @@ import NVActivityIndicatorView
 internal protocol UserDisplayLogic: class {
     func displayUser(user: UserModel.User)
     func displayFavorite(image: UIImage)
+    func displayNetworkError(alert: UIAlertController)
+    func backToPrevious()
     func showLoading()
     func hideLoading()
 }
@@ -20,6 +22,7 @@ internal protocol UserDisplayLogic: class {
 public class UserViewController: UIViewController, NVActivityIndicatorViewable {
     
     // MARK: - IBOutlet Properties
+    @IBOutlet var stackView: UIStackView!
     @IBOutlet var userImageView: UIImageView!
     @IBOutlet var userLoginLabel: UILabel!
     @IBOutlet var userGithubLabel: UILabel!
@@ -46,10 +49,14 @@ public class UserViewController: UIViewController, NVActivityIndicatorViewable {
     
     // MARK: - Setup View
     private func setupView() {
+        stackView.isHidden = true
+        indicatorView.isHidden = true
         view.backgroundColor = UIColor.systemBackground
         navigationItem.rightBarButtonItem = favoriteItem
         indicatorView.startAnimating()
         indicatorView.hidesWhenStopped = true
+        userLoginLabel.numberOfLines = 0
+        userGithubLabel.numberOfLines = 0
     }
     
     // MARK: - Action
@@ -67,6 +74,8 @@ public class UserViewController: UIViewController, NVActivityIndicatorViewable {
 extension UserViewController: UserDisplayLogic {
     
     func displayUser(user: UserModel.User) {
+        stackView.isHidden = false
+        indicatorView.isHidden = false
         userImageView.kf.setImage(with: user.avatar) { [unowned self] (result) in
             self.indicatorView.stopAnimating()
         }
@@ -76,6 +85,8 @@ extension UserViewController: UserDisplayLogic {
         userSiteadminLabel.text = user.siteAdmin
         interactor?.user = user
         interactor?.updateFavorite(user: user)
+        
+        
     }
     
     func displayFavorite(image: UIImage) {
@@ -91,4 +102,13 @@ extension UserViewController: UserDisplayLogic {
     func hideLoading() {
         stopAnimating()
     }
+    
+    func displayNetworkError(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func backToPrevious() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

@@ -11,6 +11,7 @@ internal protocol UserListPresentationLogic {
     var viewController: UserListDisplayLogic? { get }
     
     func presentUserResponse(response: [UserModel.Response])
+    func presentErrorState(error: ErrorStatus)
 }
 
 internal class UserListPresenter {
@@ -29,5 +30,18 @@ extension UserListPresenter: UserListPresentationLogic {
                                   siteAdmin: element.siteAdmin ?? false ? "true":"false")
         }
         viewController?.displayUser(userList: UserModel.UserList(users: users))
+    }
+    
+    func presentErrorState(error: ErrorStatus) {
+        switch error {
+        case .networkError:
+            let alert = UIAlertController(title: "Something wrong!", message: "the internet connection appears to be offline", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            viewController?.displayNetworkError(alert: alert)
+        case .commonError:
+            let alert = UIAlertController(title: "Something wrong!", message: "Cannot load data, Please try again later.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            viewController?.displayNetworkError(alert: alert)
+        }
     }
 }
