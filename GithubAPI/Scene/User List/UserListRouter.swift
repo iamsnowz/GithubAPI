@@ -9,7 +9,7 @@
 import UIKit
 
 internal protocol UserListRoutingLogic {
-    func routeToScene()
+    func routeToUser()
 }
 
 internal protocol UserListDataPassing {
@@ -36,12 +36,16 @@ public class UserListRouter: UserListDataPassing {
 }
 
 extension UserListRouter: UserListRoutingLogic {
-    func routeToScene() {
-        /*
-         let view = AnotherRouter().createModule()
-         var destinationDS = view.router?.dataStore
-         destinationDS?.value = dataStore?.value
-         viewController?.navigationController?.pushViewControler(view, animted: true)
-         */
+    func routeToUser() {
+        let router = UserRouter()
+        let view = router.createModule()
+        view.interactor?.favoriteHandler = viewController?.updateFavoriteHandler
+        var destinationDS = view.router!.dataStore!
+        passData(source: dataStore!, destination: &destinationDS)
+        viewController?.navigationController?.pushViewController(view, animated: true)
+    }
+    
+    func passData(source: UserListDataStore, destination: inout UserDataStore) {
+        destination.userLogin = source.selectedUserLogin
     }
 }

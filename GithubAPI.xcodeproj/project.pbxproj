@@ -21,6 +21,11 @@
 		781E8B3423C4E8940005E8EF /* UserFavoriteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3323C4E8940005E8EF /* UserFavoriteDatabase.swift */; };
 		781E8B3623C4E8AA0005E8EF /* RealmSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3523C4E8AA0005E8EF /* RealmSwift.swift */; };
 		781E8B3923C4EA320005E8EF /* UIRefreshControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3823C4EA320005E8EF /* UIRefreshControl+Extension.swift */; };
+		781E8B4123C4F0FC0005E8EF /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3B23C4F0FC0005E8EF /* UserPresenter.swift */; };
+		781E8B4223C4F0FC0005E8EF /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3C23C4F0FC0005E8EF /* UserRouter.swift */; };
+		781E8B4323C4F0FC0005E8EF /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3D23C4F0FC0005E8EF /* UserViewController.swift */; };
+		781E8B4423C4F0FC0005E8EF /* UserInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781E8B3E23C4F0FC0005E8EF /* UserInteractor.swift */; };
+		781E8B4623C4F0FC0005E8EF /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781E8B4023C4F0FC0005E8EF /* UserViewController.xib */; };
 		785E564523C49F3A006F1F3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785E564423C49F3A006F1F3B /* AppDelegate.swift */; };
 		785E564723C49F3A006F1F3B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785E564623C49F3A006F1F3B /* SceneDelegate.swift */; };
 		785E564923C49F3A006F1F3B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785E564823C49F3A006F1F3B /* ContentView.swift */; };
@@ -67,6 +72,11 @@
 		781E8B3323C4E8940005E8EF /* UserFavoriteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFavoriteDatabase.swift; sourceTree = "<group>"; };
 		781E8B3523C4E8AA0005E8EF /* RealmSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSwift.swift; sourceTree = "<group>"; };
 		781E8B3823C4EA320005E8EF /* UIRefreshControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Extension.swift"; sourceTree = "<group>"; };
+		781E8B3B23C4F0FC0005E8EF /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
+		781E8B3C23C4F0FC0005E8EF /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		781E8B3D23C4F0FC0005E8EF /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		781E8B3E23C4F0FC0005E8EF /* UserInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInteractor.swift; sourceTree = "<group>"; };
+		781E8B4023C4F0FC0005E8EF /* UserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		785E564123C49F3A006F1F3B /* GithubAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		785E564423C49F3A006F1F3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		785E564623C49F3A006F1F3B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +143,7 @@
 		781E8B1823C4CABF0005E8EF /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				781E8B3A23C4F0EA0005E8EF /* User Detail */,
 				781E8B1923C4CAC10005E8EF /* User List */,
 			);
 			path = Scene;
@@ -199,6 +210,18 @@
 				781E8B3823C4EA320005E8EF /* UIRefreshControl+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		781E8B3A23C4F0EA0005E8EF /* User Detail */ = {
+			isa = PBXGroup;
+			children = (
+				781E8B3B23C4F0FC0005E8EF /* UserPresenter.swift */,
+				781E8B3C23C4F0FC0005E8EF /* UserRouter.swift */,
+				781E8B3D23C4F0FC0005E8EF /* UserViewController.swift */,
+				781E8B3E23C4F0FC0005E8EF /* UserInteractor.swift */,
+				781E8B4023C4F0FC0005E8EF /* UserViewController.xib */,
+			);
+			path = "User Detail";
 			sourceTree = "<group>";
 		};
 		785E563823C49F3A006F1F3B = {
@@ -389,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				785E565123C49F3B006F1F3B /* LaunchScreen.storyboard in Resources */,
+				781E8B4623C4F0FC0005E8EF /* UserViewController.xib in Resources */,
 				781E8B2523C4CAE50005E8EF /* UserListViewController.xib in Resources */,
 				785E564E23C49F3B006F1F3B /* Preview Assets.xcassets in Resources */,
 				785E564B23C49F3B006F1F3B /* Assets.xcassets in Resources */,
@@ -521,15 +545,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				785E564523C49F3A006F1F3B /* AppDelegate.swift in Sources */,
+				781E8B4423C4F0FC0005E8EF /* UserInteractor.swift in Sources */,
 				781E8B3123C4D6420005E8EF /* UserWorker.swift in Sources */,
 				781E8B2A23C4CC590005E8EF /* UserTableViewCell.swift in Sources */,
+				781E8B4123C4F0FC0005E8EF /* UserPresenter.swift in Sources */,
 				781E8B2023C4CAE50005E8EF /* UserListPresenter.swift in Sources */,
+				781E8B4323C4F0FC0005E8EF /* UserViewController.swift in Sources */,
 				781E8B3923C4EA320005E8EF /* UIRefreshControl+Extension.swift in Sources */,
 				781E8B3623C4E8AA0005E8EF /* RealmSwift.swift in Sources */,
 				781E8B2423C4CAE50005E8EF /* UserModel.swift in Sources */,
 				785E564723C49F3A006F1F3B /* SceneDelegate.swift in Sources */,
 				781E8B2323C4CAE50005E8EF /* UserListInteractor.swift in Sources */,
 				785E564923C49F3A006F1F3B /* ContentView.swift in Sources */,
+				781E8B4223C4F0FC0005E8EF /* UserRouter.swift in Sources */,
 				781E8B2E23C4CCDA0005E8EF /* Service.swift in Sources */,
 				781E8B3423C4E8940005E8EF /* UserFavoriteDatabase.swift in Sources */,
 				781E8B2123C4CAE50005E8EF /* UserListRouter.swift in Sources */,

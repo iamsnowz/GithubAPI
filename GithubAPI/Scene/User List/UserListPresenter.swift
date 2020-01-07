@@ -23,10 +23,10 @@ extension UserListPresenter: UserListPresentationLogic {
         let users: [UserModel.User] = response.map { element in
             return UserModel.User(id: element.id ?? 0,
                                   login: element.login ?? "-",
-                                  avatar: element.avatarUrl ?? "",
+                                  avatar: URL(string: element.avatarUrl ?? ""),
                                   githubUrl: element.htmlUrl ?? "",
                                   accountType: element.type ?? "",
-                                  siteAdmin: element.siteAdmin ?? false ? "false":"true")
+                                  siteAdmin: element.siteAdmin ?? false ? "true":"false")
         }
         viewController?.displayUser(userList: UserModel.UserList(users: users))
     }

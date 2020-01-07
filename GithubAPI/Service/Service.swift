@@ -30,6 +30,10 @@ public enum API {
     }
 }
 
+public enum ErrorStatus: Error {
+    case network
+}
+
 public class Service {
     static let shared = Service()
     

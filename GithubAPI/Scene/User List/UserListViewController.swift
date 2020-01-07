@@ -11,6 +11,7 @@ import NVActivityIndicatorView
 
 internal protocol UserListDisplayLogic: class {
     func displayUser(userList: UserModel.UserList)
+    func displayNetworkError()
     func endRefresh()
     func showLoading()
     func hideLoading()
@@ -41,9 +42,9 @@ public class UserListViewController: UIViewController, NVActivityIndicatorViewab
     
     // MARK: - Setup View
     private func setupView() {
+        view.backgroundColor = UIColor.systemBackground
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
     }
     
@@ -52,12 +53,17 @@ public class UserListViewController: UIViewController, NVActivityIndicatorViewab
     private func pullToRefresh() {
         interactor?.refresh()
     }
+    
+    func updateFavoriteHandler() {
+        interactor?.updateFavorite(tableView: tableView)
+    }
 }
 
 // MARK: - Start of Extension Any
 extension UserListViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         interactor?.selectUser(at: indexPath)
+        router?.routeToUser()
     }
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -108,5 +114,9 @@ extension UserListViewController: UserListDisplayLogic {
     
     func hideLoading() {
         stopAnimating()
+    }
+    
+    func displayNetworkError() {
+        
     }
 }

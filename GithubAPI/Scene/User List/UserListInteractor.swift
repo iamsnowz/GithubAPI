@@ -13,12 +13,14 @@ internal protocol UserListBusinessLogic {
     func getUser()
     func selectUser(at indexPath: IndexPath)
     func updateUserList(userList: UserModel.UserList)
+    func updateFavorite(tableView: UITableView)
 }
 
 public protocol UserListDataStore {
     var next: Int { get set }
-    var selectedId: Int? { get set }
+    var selectedUserLogin: String? { get set }
     var userList: UserModel.UserList? { get set }
+    var indexPath: IndexPath? { get set }
 }
 
 internal class UserListInteractor: UserListDataStore {
@@ -31,8 +33,9 @@ internal class UserListInteractor: UserListDataStore {
     var userWorker: UserWorkerProtocol?
     
     var next: Int = 0
-    var selectedId: Int?
+    var selectedUserLogin: String?
     var userList: UserModel.UserList?
+    var indexPath: IndexPath?
 }
 
 extension UserListInteractor: UserListBusinessLogic {
@@ -64,11 +67,17 @@ extension UserListInteractor: UserListBusinessLogic {
     
     func selectUser(at indexPath: IndexPath) {
         guard let list = userList else { return }
-        selectedId = list.users[indexPath.row].id
+        self.indexPath = indexPath
+        selectedUserLogin = list.users[indexPath.row].login
     }
     
     func updateUserList(userList: UserModel.UserList) {
         self.userList = userList
+    }
+    
+    func updateFavorite(tableView: UITableView) {
+        guard let indexPath = indexPath else { return }
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
 }

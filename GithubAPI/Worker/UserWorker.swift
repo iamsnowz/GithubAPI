@@ -9,12 +9,13 @@
 import Foundation
 
 public protocol UserWorkerProtocol {
-    func getUserList(id: Int, completion: @escaping ((Result<[UserModel.Response], UserModel.ErrorStatus>) -> Void))
+    func getUserList(id: Int, completion: @escaping ((Result<[UserModel.Response], ErrorStatus>) -> Void))
+    func getUser(userLogin: String, completion: @escaping ((Result<UserModel.Response, ErrorStatus>) -> Void))
 }
 
 class UserWorker: UserWorkerProtocol {
     
-    func getUserList(id: Int, completion: @escaping ((Result<[UserModel.Response], UserModel.ErrorStatus>) -> Void)) {
+    func getUserList(id: Int, completion: @escaping ((Result<[UserModel.Response], ErrorStatus>) -> Void)) {
         Service.shared.GET(request: .users(since: id)) { (response: [UserModel.Response]?) in
             if let response = response {
                 completion(.success(response))
@@ -22,6 +23,16 @@ class UserWorker: UserWorkerProtocol {
                 completion(.failure(.network))
             }
             
+        }
+    }
+    
+    func getUser(userLogin: String, completion: @escaping ((Result<UserModel.Response, ErrorStatus>) -> Void)) {
+        Service.shared.GET(request: .user(login: userLogin)) { (response: UserModel.Response?) in
+            if let response = response {
+                completion(.success(response))
+            } else {
+                completion(.failure(.network))
+            }
         }
     }
 }

@@ -32,10 +32,6 @@ public struct UserModel {
         }
     }
     
-    public enum ErrorStatus: Error {
-        case network
-    }
-    
     public struct UserList {
         public let users: [User]
     }
@@ -43,7 +39,7 @@ public struct UserModel {
     public struct User {
         public let id: Int
         public let login: String
-        public let avatar: String
+        public let avatar: URL?
         public let githubUrl: String
         public let accountType: String
         public let siteAdmin: String
