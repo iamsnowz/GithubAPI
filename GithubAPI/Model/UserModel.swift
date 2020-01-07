@@ -15,7 +15,21 @@ internal struct UserModel {
     }
     
     internal struct Response: Decodable {
+        var login: String?
+        var id: Int?
+        var avatarUrl: String?
+        var htmlUrl: String?
+        var type: String?
+        var siteAdmin: Bool?
         
+        enum CodingKeys: String, CodingKey {
+            case avatarUrl = "avatar_url"
+            case htmlUrl = "html_url"
+            case siteAdmin = "site_admin"
+            case login
+            case id
+            case type
+        }
     }
     
     internal struct Error: Decodable {
