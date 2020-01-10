@@ -22,6 +22,7 @@ public protocol UserListDataStore {
     var selectedUserLogin: String? { get set }
     var userList: UserModel.UserList? { get set }
     var indexPath: IndexPath? { get set }
+    var isPaginate: Bool { get set }
 }
 
 internal class UserListInteractor: UserListDataStore {
@@ -37,6 +38,7 @@ internal class UserListInteractor: UserListDataStore {
     var selectedUserLogin: String?
     var userList: UserModel.UserList?
     var indexPath: IndexPath?
+    var isPaginate: Bool = false
 }
 
 extension UserListInteractor: UserListBusinessLogic {
@@ -77,8 +79,11 @@ extension UserListInteractor: UserListBusinessLogic {
      Logic for paginate
      */
     func pagination(indexPath: IndexPath) {
+        guard !isPaginate else { return }
+        
         let lastElement = indexPath.row + 1
         if lastElement == userList?.users.count {
+            isPaginate = true
             presenter?.viewController?.showPaginateLoading()
             guard let lastUser = userList?.users.last else { return }
             next = lastUser.id
@@ -90,6 +95,7 @@ extension UserListInteractor: UserListBusinessLogic {
                     self?.presenter?.presentErrorState(error: error)
                 }
                 self?.presenter?.viewController?.hideLoading()
+                self?.isPaginate = false
             })
         }
     }
