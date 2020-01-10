@@ -32,7 +32,25 @@ public class UserListViewController: UIViewController, NVActivityIndicatorViewab
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         return refreshControl
     }()
+    
     // MARK: - View lifecycle
+    
+    init() {
+        super.init(nibName: "UserListViewController", bundle: Bundle(for: type(of: self)))
+        let interactor = UserListInteractor(userWorker: UserWorker())
+        let presenter = UserListPresenter()
+        let router = UserListRouter()
+        self.interactor = interactor
+        self.router = router
+        interactor.presenter = presenter
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()

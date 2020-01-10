@@ -17,28 +17,14 @@ internal protocol UserListDataPassing {
 }
 
 public class UserListRouter: UserListDataPassing {
-    private weak var viewController: UserListViewController?
+    public weak var viewController: UserListViewController?
     public var dataStore: UserListDataStore?
-    
-    public func createModule() -> UserListViewController {
-        let viewController = UserListViewController(nibName: "UserListViewController", bundle: Bundle(for: type(of: self)))
-        let interactor = UserListInteractor(userWorker: UserWorker())
-        let presenter = UserListPresenter()
-        viewController.interactor = interactor
-        viewController.router = self
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        self.viewController = viewController
-        self.dataStore = interactor
-        return viewController
-    }
     
 }
 
 extension UserListRouter: UserListRoutingLogic {
     func routeToUser() {
-        let router = UserRouter()
-        let view = router.createModule()
+        let view = UserViewController()
         view.interactor?.favoriteHandler = viewController?.updateFavoriteHandler
         var destinationDS = view.router!.dataStore!
         passData(source: dataStore!, destination: &destinationDS)

@@ -40,6 +40,22 @@ public class UserViewController: UIViewController, NVActivityIndicatorViewable {
     
     
     // MARK: - View lifecycle
+    init() {
+        super.init(nibName: "UserViewController", bundle: Bundle(for: type(of: self)))
+        let interactor = UserInteractor(userWorker: UserWorker())
+        let presenter = UserPresenter()
+        let router = UserRouter()
+        self.interactor = interactor
+        self.router = router
+        interactor.presenter = presenter
+        presenter.viewController = self
+        router.viewController = self
+        router.dataStore = interactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()

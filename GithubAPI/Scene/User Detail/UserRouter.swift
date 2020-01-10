@@ -17,21 +17,8 @@ internal protocol UserDataPassing {
 }
 
 public class UserRouter: UserDataPassing {
-    private weak var viewController: UserViewController?
+    public weak var viewController: UserViewController?
     public var dataStore: UserDataStore?
-    
-    public func createModule() -> UserViewController {
-        let viewController = UserViewController(nibName: "UserViewController", bundle: Bundle(for: type(of: self)))
-        let interactor = UserInteractor(userWorker: UserWorker())
-        let presenter = UserPresenter()
-        viewController.interactor = interactor
-        viewController.router = self
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        self.viewController = viewController
-        self.dataStore = interactor
-        return viewController
-    }
     
 }
 
